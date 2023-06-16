@@ -1,12 +1,12 @@
 #include <stdio.h>
 
 /**
- * main - Entry point of the program
- *
- * Description: Prints all the numbers of base 16 in lowercase, followed by a new line.
- *
- * Return: Always 0 (Success)
- */
+* main - Entry point of the program
+*
+* Description: Prints all the numbers of base 16 in lowercase, follow by \n.
+*
+* Return: Always 0 (Success)
+*/
 int main(void)
 {
 	char digit;
@@ -23,5 +23,5 @@ int main(void)
 
 	putchar('\n');
 
-	return 0;
+	return (0);
 }
