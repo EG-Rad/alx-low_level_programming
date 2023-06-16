@@ -3,23 +3,28 @@
 /**
  * main - Entry point of the program
  *
- * Desc: Prints all possible combinations of single-digit numbers.
+ * Description: Prints all possible combinations of single-digit numbers.
  * Numbers are separated by ", " and printed in ascending order.
  *
  * Return: Always 0 (Success)
  */
 int main(void)
 {
-	putchar('0');
+    int i = 0;
 
-	for (int i = 1; i < 10; i++)
-	{
-		putchar(',');
-		putchar(' ');
-		putchar('0' + i);
-	}
+    while (i < 9)
+    {
+        if (i > 0)
+        {
+            putchar(',');
+            putchar(' ');
+        }
+        putchar('0' + i);
+        i++;
+    }
 
-	putchar('\n');
+    putchar('\n');
 
-	return (0);
+    return 0;
 }
+
