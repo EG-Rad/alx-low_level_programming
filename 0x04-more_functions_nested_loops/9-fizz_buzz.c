@@ -2,34 +2,29 @@
 
 /**
  * main - Entry point of the program
+ *
  * Return: Always 0 (Success)
  */
-
 int main(void)
 {
-int i;
+    int i = 1;
 
-for (i = 1; i <= 100; ++i)
-        {
-if (i % 3 == 0 && i % 5 != 0 && i != 100)
-{
-printf("Fizz ");
-} else if (i % 5 == 0 && i % 3 != 0 && i != 100)
-{
-printf("Buzz ");
-} else if (i % 3 == 0 && i % 5 == 0 && i != 100)
-{
-printf("FizzBuzz ");
-} else if (i == 100)
-{
-printf("Buzz");
-} else
-{
-printf("%d ", i);
-}
-}
-printf("\n");
-        
-return (0);
+    while (i <= 100)
+    {
+        if (i % 3 == 0 && i % 5 != 0)
+            printf("Fizz ");
+        else if (i % 3 != 0 && i % 5 == 0)
+            printf("Buzz ");
+        else if (i % 3 == 0 && i % 5 == 0)
+            printf("FizzBuzz ");
+        else
+            printf("%d ", i);
+
+        i++;
+    }
+
+    printf("\n");
+
+    return 0;
 }
 
