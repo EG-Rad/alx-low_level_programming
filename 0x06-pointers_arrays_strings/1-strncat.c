@@ -14,10 +14,10 @@ char *ptr = dest;
 
 while (*ptr != '\0')
 {
-        ptr++;
+ptr++;
 }
 
-while (*src != '\0' && n > 0) 
+while (*src != '\0' && n > 0)
 {
 *ptr = *src;
 ptr++;
