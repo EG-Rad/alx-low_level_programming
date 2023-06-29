@@ -15,7 +15,7 @@ while (*ptr != '\0')
 ptr++;
 }
 
-while (*src != '\0') 
+while (*src != '\0')
 {
 *ptr = *src;
 ptr++;
