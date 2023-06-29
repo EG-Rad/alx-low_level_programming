@@ -1,3 +1,4 @@
+
 #include "main.h"
 
 /**
@@ -8,31 +9,22 @@
  */
 char *cap_string(char *str)
 {
-	int i;
-	int capitalize_next = 1;
+	int i = 0;
 
-	for (i = 0; str[i] != '\0'; i++)
+	while (str[i] != '\0')
 	{
-		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
-		    str[i] == ',' || str[i] == ';' || str[i] == '.' ||
-		    str[i] == '!' || str[i] == '?' || str[i] == '"' ||
-		    str[i] == '(' || str[i] == ')' || str[i] == '{' ||
-		    str[i] == '}')
+		if (str[i] >= 'a' && str[i] <= 'z')
 		{
-			capitalize_next = 1;
+			if (i == 0 || str[i - 1] == ' ' || str[i - 1] == '\t' ||
+			    str[i - 1] == '\n' || str[i - 1] == ',' ||
+			    str[i - 1] == ';' || str[i - 1] == '.' ||
+			    str[i - 1] == '!' || str[i - 1] == '?' ||
+			    str[i - 1] == '"' || str[i - 1] == '(' ||
+			    str[i - 1] == ')' || str[i - 1] == '{' ||
+			    str[i - 1] == '}')
+				str[i] -= 32;
 		}
-		else if
-		((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))
-		{
-			if (capitalize_next)
-			{
-				if (str[i] >= 'a' && str[i] <= 'z')
-				{
-					str[i] = str[i] - 'a' + 'A';
-				}
-				capitalize_next = 0;
-			}
-		}
+		i++;
 	}
 
 	return (str);
