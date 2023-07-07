@@ -9,7 +9,7 @@
  */
 int is_positive(const char *str)
 {
-int i = 0;
+	int i = 0;
 
 	while (str[i] != '\0')
 	{
@@ -18,7 +18,7 @@ int i = 0;
 	i++;
 	}
 
-	return (1);
+return (1);
 }
 
 /**
@@ -51,6 +51,9 @@ int i;
  */
 int main(int argc, char *argv[])
 {
+const char **numbers;
+int result;
+
 	if (argc == 1)
 	{
 	printf("0\n");
@@ -63,9 +66,8 @@ int main(int argc, char *argv[])
 	return (1);
 	}
 
-	const char **numbers = (const char **) (argv + 1);
-	int result = add_numbers(numbers, argc - 1);
-
+	numbers = (const char **)(argv + 1);
+	result = add_numbers(numbers, argc - 1);
 	printf("%d\n", result);
 
 	return (0);
