@@ -9,14 +9,14 @@
  */
 int is_positive(const char *str)
 {
-	int i = 0;
+int i = 0;
 
-	while (str[i] != '\0')
-	{
-	if (str[i] < '0' || str[i] > '9')
-	return (0);
-	i++;
-	}
+while (str[i] != '\0')
+{
+if (str[i] < '0' || str[i] > '9')
+return (0);
+i++;
+}
 
 return (1);
 }
@@ -26,23 +26,35 @@ return (1);
  * @numbers: The array of numbers to add.
  * @count: The number of elements in the array.
  *
- * Return: The sum of the numbers.
+ * Return: The sum of the numbers, or -1 if a non-digit character
+ * is encountered.
  */
-int add_numbers(const char *numbers[], int count)
+int add_numbers(const char **numbers, int count)
 {
 int sum = 0;
-int i;
+int i, j;
+const char *current_number;
 
-	for (i = 0; i < count; i++)
-	{
-	sum += atoi(numbers[i]);
-	}
+for (i = 0; i < count; i++)
+{
+current_number = numbers[i];
+j = 0;
 
-	return (sum);
+while (current_number[j] != '\0')
+{
+if (current_number[j] < '0' || current_number[j] > '9')
+return (-1);
+j++;
+}
+
+sum += atoi(current_number);
+}
+
+return (sum);
 }
 
 /**
- * main - Adds positive numbers provided as command-line arguments
+ * main - Adds positive numbers provided as command-line argument
  * and prints the result.
  * @argc: The argument count.
  * @argv: The argument vector.
@@ -51,25 +63,24 @@ int i;
  */
 int main(int argc, char *argv[])
 {
-const char **numbers;
 int result;
 
-	if (argc == 1)
-	{
-	printf("0\n");
-	return (0);
-	}
+if (argc == 1)
+{
+printf("0\n");
+return (0);
+}
 
-	if (!is_positive(argv[1]))
-	{
-	printf("Error\n");
-	return (1);
-	}
+result = add_numbers((const char **)(argv + 1), argc - 1);
 
-	numbers = (const char **)(argv + 1);
-	result = add_numbers(numbers, argc - 1);
-	printf("%d\n", result);
+if (result == -1)
+{
+printf("Error\n");
+return (1);
+}
 
-	return (0);
+printf("%d\n", result);
+
+return (0);
 }
 
