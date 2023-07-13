@@ -1,110 +1,167 @@
 #include <stdlib.h>
-#include <unistd.h>
 
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
+ * _putchar - Writes a character to the standard output.
+ * @c: The character to be written.
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: On success, the character written is returned.
+ *         On error, (-1) is returned, and errno is set appropriately.
  */
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
+int _putchar(char c);
 
 /**
- * _puts - prints a string to stdout
- * @str: The string to print
- */
-void _puts(char *str)
-{
-	while (*str)
-	_putchar(*str++);
-}
-
-/**
- * is_digit - checks if a character is a digit
- * @c: The character to check
+ * _strlen - Calculates the length of a string.
+ * @str: The input string.
  *
- * Return: 1 if c is a digit, 0 otherwise
+ * Return: The length of the string.
  */
-int is_digit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
+int _strlen(char *str);
 
 /**
- * _atoi - converts a string to an integer
- * @s: The string to convert
+ * _isdigit - Checks if a string contains only digits.
+ * @str: The input string.
  *
- * Return: The integer value of the converted string
+ * Return: (1) if the string contains only digits, (0) otherwise.
  */
-int _atoi(char *s)
-{
-	int res = 0;
-	int sign = 1;
+int _isdigit(char *str);
 
-	while (*s && !is_digit(*s))
+/**
+ * print_error - Prints an error message.
+ */
+void print_error(void);
+
+/**
+ * print_number - Prints a number.
+ * @number: The number to be printed.
+ */
+void print_number(char *number);
+
+/**
+ * multiply - Multiplies two numbers.
+ * @num1: The first number.
+ * @num2: The second number.
+ */
+void multiply(char *num1, char *num2);
+
+/**
+ * main - Entry point of the program.
+ * @argc: The number of command-line arguments.
+ * @argv: An array containing the command-line arguments.
+ *
+ * Return: (0) on success, (98) on error.
+ */
+int main(int argc, char *argv[])
+{
+	if (argc != 3 || !_isdigit(argv[1]) || !_isdigit(argv[2]))
 	{
-	if (*s == '-')
-	sign *= -1;
-	s++;
-	}
-	while (*s && is_digit(*s))
-	res = res * 10 + (*s++ - '0');
-
-	return (sign * res);
-}
-
-/**
- * print_number - prints an integer to stdout
- * @n: The integer to print
- */
-void print_number(int n)
-{
-	if (n < 0)
-	{
-	_putchar('-');
-	n = -n;
-	}
-	if (n / 10)
-	print_number(n / 10);
-	_putchar(n % 10 + '0');
-}
-
-/**
- * main - multiplies two positive numbers and prints the result
- * @argc: The number of arguments passed to the program
- * @argv: An array of pointers to the arguments passed to the program
- *
- * Return: 0 on success, 98 on error
- */
-int main(int argc, char **argv)
-{
-int num1, num2, res;
-
-int i, j;
-
-if (argc != 3)
-{
-    _puts("Error\n");
-    exit(98);
-}
-	for (i = 1; i < argc; i++)
-	for (j = 0; argv[i][j]; j++)
-	if (!is_digit(argv[i][j]))
-	{
-	_puts("Error\n");
-	exit(98);
+		print_error();
+		return (98);
 	}
 
-	num1 = _atoi(argv[1]);
-	num2 = _atoi(argv[2]);
-	res = num1 * num2;
-	print_number(res);
+	multiply(argv[1], argv[2]);
+
+	return (0);
+}
+
+/**
+ * _strlen - Calculates the length of a string.
+ * @str: The input string.
+ *
+ * Return: The length of the string.
+ */
+int _strlen(char *str)
+{
+	int len = 0;
+
+	while (str[len] != '\0')
+		len++;
+
+	return (len);
+}
+
+/**
+ * _isdigit - Checks if a string contains only digits.
+ * @str: The input string.
+ *
+ * Return: (1) if the string contains only digits, (0) otherwise.
+ */
+int _isdigit(char *str)
+{
+	int i = 0;
+
+	while (str[i] != '\0')
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+
+	return (1);
+}
+
+/**
+ * print_error - Prints an error message.
+ */
+void print_error(void)
+{
+	char *error_msg = "Error\n";
+	int len = _strlen(error_msg);
+	int i;
+
+	for (i = 0; i < len; i++)
+		_putchar(error_msg[i]);
+}
+
+/**
+ * print_number - Prints a number.
+ * @number: The number to be printed.
+ */
+void print_number(char *number)
+{
+	int len = _strlen(number);
+	int i;
+
+	for (i = 0; i < len; i++)
+		_putchar(number[i]);
+}
+
+/**
+ * multiply - Multiplies two numbers.
+ * @num1: The first number.
+ * @num2: The second number.
+ */
+void multiply(char *num1, char *num2)
+{
+	int len1 = _strlen(num1);
+	int len2 = _strlen(num2);
+	int len_result = len1 + len2;
+	int *result = malloc(sizeof(int) * len_result);
+	int i, j, carry, digit;
+
+	for (i = 0; i < len_result; i++)
+		result[i] = 0;
+
+	for (i = len1 - 1; i >= 0; i--)
+	{
+		carry = 0;
+		for (j = len2 - 1; j >= 0; j--)
+		{
+			digit = (num1[i] - '0') * (num2[j] - '0') + result[i + j + 1] + carry;
+			carry = digit / 10;
+			result[i + j + 1] = digit % 10;
+		}
+		result[i] += carry;
+	}
+
+	i = 0;
+	while (i < len_result - 1 && result[i] == 0)
+		i++;
+
+	for (; i < len_result; i++)
+		_putchar(result[i] + '0');
+
 	_putchar('\n');
 
-return (0);
+	free(result);
 }
 
