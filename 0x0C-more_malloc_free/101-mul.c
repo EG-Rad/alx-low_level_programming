@@ -1,123 +1,107 @@
 #include <stdlib.h>
-
-int _putchar(char c);
+#include <unistd.h>
 
 /**
- * _strlen - returns the length of a string
- * @s: string to check length of
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
  *
- * Return: length of string
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
-int _strlen(char *s)
+int _putchar(char c)
 {
-int len = 0;
-
-	while (s[len])
-	len++;
-
-return (len);
+	return (write(1, &c, 1));
 }
 
 /**
- * _isdigit - checks if a character is a digit
- * @c: character to check
+ * _puts - prints a string to stdout
+ * @str: The string to print
+ */
+void _puts(char *str)
+{
+	while (*str)
+	_putchar(*str++);
+}
+
+/**
+ * is_digit - checks if a character is a digit
+ * @c: The character to check
  *
  * Return: 1 if c is a digit, 0 otherwise
  */
-int _isdigit(char c)
+int is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
 
 /**
- * mul - multiplies two positive numbers
- * @num1: first number to multiply
- * @num2: second number to multiply
+ * _atoi - converts a string to an integer
+ * @s: The string to convert
  *
- * Return: pointer to the result of the multiplication
+ * Return: The integer value of the converted string
  */
-char *mul(char *num1, char *num2)
+int _atoi(char *s)
 {
-int len1 = _strlen(num1), len2 = _strlen(num2), i, j;
-char *res = malloc(len1 + len2 + 1);
+	int res = 0;
+	int sign = 1;
 
-	if (!res)
-	return (NULL);
-
-	for (i = 0; i < len1 + len2; i++)
-	res[i] = '0';
-	res[i] = '\0';
-
-	for (i = len1 - 1; i >= 0; i--)
+	while (*s && !is_digit(*s))
 	{
-	if (!_isdigit(num1[i]))
-	{
-	free(res);
-	return (NULL);
+	if (*s == '-')
+	sign *= -1;
+	s++;
 	}
+	while (*s && is_digit(*s))
+	res = res * 10 + (*s++ - '0');
 
-	for (j = len2 - 1; j >= 0; j--)
-	{
-	if (!_isdigit(num2[j]))
-	{
-	free(res);
-	return (NULL);
-	}
-
-	res[i + j + 1] += (num1[i] - '0') * (num2[j] - '0');
-	res[i + j] += res[i + j + 1] / 10;
-	res[i + j + 1] %= 10;
-	}
-	}
-
-	while (*res == '0' && *(res + 1))
-	res++;
-
-	return (res);
+	return (sign * res);
 }
 
 /**
- * main - entry point for program to multiply two positive numbers
- * @argc: number of arguments passed to program
- * @argv: array of arguments passed to program
+ * print_number - prints an integer to stdout
+ * @n: The integer to print
+ */
+void print_number(int n)
+{
+	if (n < 0)
+	{
+	_putchar('-');
+	n = -n;
+	}
+	if (n / 10)
+	print_number(n / 10);
+	_putchar(n % 10 + '0');
+}
+
+/**
+ * main - multiplies two positive numbers and prints the result
+ * @argc: The number of arguments passed to the program
+ * @argv: An array of pointers to the arguments passed to the program
  *
- * Return: 0 on success, 98 on failure
+ * Return: 0 on success, 98 on error
  */
 int main(int argc, char **argv)
 {
-	char *result;
+int num1, num2, res;
 
 	if (argc != 3)
 	{
-	_putchar('E');
-	_putchar('r');
-	_putchar('r');
-	_putchar('o');
-	_putchar('r');
-	_putchar('\n');
-	return (98);
+	_puts("Error\n");
+	exit(98);
 	}
-
-	result = mul(argv[1], argv[2]);
-
-	if (!result)
+	for (int i = 1; i < argc; i++)
+	for (int j = 0; argv[i][j]; j++)
+	if (!is_digit(argv[i][j]))
 	{
-	_putchar('E');
-	_putchar('r');
-	_putchar('r');
-	_putchar('o');
-	_putchar('r');
-	_putchar('\n');
-	return (98);
+	_puts("Error\n");
+	exit(98);
 	}
-
-	while (*result)
-	_putchar(*result++ + '0');
-
+	num1 = _atoi(argv[1]);
+	num2 = _atoi(argv[2]);
+	res = num1 * num2;
+	print_number(res);
 	_putchar('\n');
 
-	free(result);
-
-	return (0);
+return (0);
 }
 
