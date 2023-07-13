@@ -84,18 +84,21 @@ int main(int argc, char **argv)
 {
 int num1, num2, res;
 
-	if (argc != 3)
-	{
-	_puts("Error\n");
-	exit(98);
-	}
-	for (int i = 1; i < argc; i++)
-	for (int j = 0; argv[i][j]; j++)
+int i, j;
+
+if (argc != 3)
+{
+    _puts("Error\n");
+    exit(98);
+}
+	for (i = 1; i < argc; i++)
+	for (j = 0; argv[i][j]; j++)
 	if (!is_digit(argv[i][j]))
 	{
 	_puts("Error\n");
 	exit(98);
 	}
+
 	num1 = _atoi(argv[1]);
 	num2 = _atoi(argv[2]);
 	res = num1 * num2;
