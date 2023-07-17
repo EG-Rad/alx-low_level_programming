@@ -7,8 +7,7 @@
  * @age: Age of the dog
  * @owner: Pointer to a character array for the owner's name
  *
- * Description: This structure represents a dog.
- * Including its name, age, and owner's name.
+ * Description: This structure represents a dog, including its name, age, and owner's name.
  */
 struct dog
 {
@@ -20,9 +19,10 @@ struct dog
 /* Define dog_t as a new name for the struct dog type */
 typedef struct dog dog_t;
 
-/* Function prototype */
+/* Function prototypes */
 dog_t *new_dog(char *name, float age, char *owner);
-void init_dog(struct dog *d, char *name, float age, char *owner);
-void print_dog(struct dog *d);
+void init_dog(dog_t *d, char *name, float age, char *owner);
+void print_dog(dog_t *d);
 
 #endif /* DOG_H */
+

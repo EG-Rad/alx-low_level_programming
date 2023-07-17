@@ -3,6 +3,25 @@
 #include <string.h>
 
 /**
+ * init_dog - Initializes a struct dog
+ * @d: Pointer to the struct dog to be initialized
+ * @name: Pointer to a character array for the dog's name
+ * @age: Age of the dog
+ * @owner: Pointer to a character array for the owner's name
+ *
+ * Return: None (void)
+ */
+void init_dog(dog_t *d, char *name, float age, char *owner)
+{
+	if (d != NULL)
+	{
+		d->name = name;
+		d->age = age;
+		d->owner = owner;
+	}
+}
+
+/**
  * new_dog - Creates a new dog_t and stores a copy of name and owner
  * @name: Pointer to a character array for the dog's name
  * @age: Age of the dog
@@ -51,3 +70,4 @@ dog_t *new_dog(char *name, float age, char *owner)
 
 	return (new_dog);
 }
+
