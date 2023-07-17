@@ -1,25 +1,21 @@
-#include "filename_printer.h"
-#include <libgen.h>
+#include "2-main.h"
 
-void print_filename(void)
+/**
+ * main - Entry point
+ *
+ * Return: Always 0 (Success)
+ */
+int main(void)
 {
-    char path[MAX_FILENAME_LENGTH];
-    char *filename;
+	const char *filename = __FILE__;
+	int i = 0;
 
-    /* Get the full path of the executable file */
-    ssize_t length = readlink("/proc/self/exe", path, sizeof(path));
-    if (length != -1)
-    {
-        /* Extract the filename from the path */
-        filename = basename(path);
+	while (filename[i] != '\0')
+	{
+		_putchar(filename[i]);
+		i++;
+	}
+	_putchar('\n');
 
-        /* Print the filename */
-        size_t len = strlen(filename);
-        for (size_t i = 0; i < len; i++)
-        {
-            _putchar(filename[i]);
-        }
-    }
-
-    _putchar('\n');
+	return (0);
 }
