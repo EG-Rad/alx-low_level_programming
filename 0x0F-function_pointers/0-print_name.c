@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "function_pointers.h"
 
 int _putchar(char c);
 
