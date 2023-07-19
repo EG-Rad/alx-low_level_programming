@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <unistd.h>
+#include "function_pointers.h"
 
 void _putchar(char c)
 {
