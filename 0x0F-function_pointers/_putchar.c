@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include "function_pointers.h"
 
 /**
  * _putchar - Writes a character to the standard output.
