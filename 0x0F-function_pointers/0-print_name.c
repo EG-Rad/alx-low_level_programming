@@ -1,35 +1,55 @@
-#include <stdlib.h>
 #include "function_pointers.h"
 
-int _putchar(char c);
+/**
+ * _putchar - writes a character to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned and errno is set appropriately.
+ */
+void _putchar(char c)
+{
+	write(1, &c, 1);
+}
 
 /**
- * print_name - Prints a name.
- * @name: Pointer to the name string.
- * @f: Function pointer to a function that takes a char pointer.
- *
- * Description: This function invokes the function pointed
- * by @f and passes @name as an argument.
+ * print_name - prints a name using a function pointer
+ * @name: The name to print
+ * @f: Pointer to a function that prints the name
  */
 void print_name(char *name, void (*f)(char *))
 {
-	if (name && f)
-		f(name);
+	f(name);
 }
 
 /**
- * print_string - Prints a string.
- * @str: Pointer to the string to be printed.
- *
- * Description: This function prints the string
- * @str followed by a newline character.
+ * print_name_as_is - prints a name as is
+ * @name: The name to print
  */
-void print_string(char *str)
+void print_name_as_is(char *name)
 {
-	if (str)
+	while (*name)
 	{
-		while (*str)
-			_putchar(*str++);
-		_putchar('\n');
+		_putchar(*name);
+		name++;
 	}
+	_putchar('\n');
 }
+
+/**
+ * print_name_uppercase - prints a name in uppercase
+ * @name: The name to print
+ */
+void print_name_uppercase(char *name)
+{
+	while (*name)
+	{
+		if (*name >= 'a' && *name <= 'z')
+			_putchar(*name + 'A' - 'a');
+		else
+			_putchar(*name);
+		name++;
+	}
+	_putchar('\n');
+}
+
