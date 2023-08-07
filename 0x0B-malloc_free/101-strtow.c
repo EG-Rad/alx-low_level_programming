@@ -34,6 +34,7 @@ int i, j, k, l, count = 0;
 	if (words[i] == NULL)
 	{
 	for (; i >= 0; i--)
+	{
 		free(words[i]);
 		free(words);
 		return (NULL);
