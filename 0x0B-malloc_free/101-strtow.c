@@ -8,14 +8,14 @@
  */
 char **strtow(char *str)
 {
-char **words;
-int i, j, k, l, count = 0;
+	char **words;
+	int i, j, k, l, count = 0;
 
 	if (str == NULL || str[0] == '\0')
 	return (NULL);
 	for (i = 0; str[i]; i++)
 	if (str[i] != ' ')
-		break;
+	break;
 	if (str[i] == '\0')
 	return (NULL);
 	for (i = 0; str[i]; i++)
@@ -27,20 +27,19 @@ int i, j, k, l, count = 0;
 	for (i = 0, j = 0; i < count; i++)
 	{
 	while (str[j] == ' ')
-		j++;
+	j++;
 	for (k = j; str[k] && str[k] != ' '; k++)
 	;
 	words[i] = malloc(k - j + 1);
 	if (words[i] == NULL)
 	{
 	for (; i >= 0; i--)
-	{
-		free(words[i]);
-		free(words);
-		return (NULL);
+	free(words[i]);
+	free(words);
+	return (NULL);
 	}
 	for (l = 0; j < k; j++, l++)
-		words[i][l] = str[j];
+	words[i][l] = str[j];
 	words[i][l] = '\0';
 	}
 	words[count] = NULL;
