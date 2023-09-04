@@ -1,51 +1,57 @@
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdlib.h>
+#include <sys/stat.h>
 #include "main.h"
 
 /**
- * read_textfile - reads a text file and prints it to the POSIX standard output
- * @filename: the name of the file to read
- * @letters: the number of letters it should read and print
+ * create_file - creates a file
+ * @filename: the name of the file to create
+ * @text_content: a NULL terminated string to write to the file
  *
- * Return: the actual number of letters it could read and print
+ * Return: 1 on success, -1 on failure
  */
-ssize_t read_textfile(const char *filename, size_t letters)
+int create_file(const char *filename, char *text_content)
 {
 	int fd;
-	ssize_t n_read, n_written;
-	char *buffer;
+	ssize_t n_written;
+	mode_t mode;
 
 	if (filename == NULL)
-		return (0);
+		return (-1);
 
-	fd = open(filename, O_RDONLY);
+	mode = S_IRUSR | S_IWUSR;
+	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, mode);
 	if (fd == -1)
-		return (0);
+		return (-1);
 
-	buffer = malloc(sizeof(char) * letters);
-	if (buffer == NULL)
-		return (0);
-
-	n_read = read(fd, buffer, letters);
-	if (n_read == -1)
+	if (text_content != NULL)
 	{
-		free(buffer);
-		close(fd);
-		return (0);
+		n_written = write(fd, text_content, _strlen(text_content));
+		if (n_written == -1)
+		{
+			close(fd);
+			return (-1);
+		}
 	}
 
-	n_written = write(STDOUT_FILENO, buffer, n_read);
-	if (n_written == -1 || n_written != n_read)
-	{
-		free(buffer);
-		close(fd);
-		return (0);
-	}
-
-	free(buffer);
 	close(fd);
 
-	return (n_written);
+	return (1);
+}
+
+/**
+ * _strlen - returns the length of a string
+ * @s: the string to measure
+ *
+ * Return: the length of the string
+ */
+size_t _strlen(char *s)
+{
+	size_t len;
+
+	for (len = 0; s[len]; len++)
+		;
+
+	return (len);
 }
 
